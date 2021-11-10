@@ -5,10 +5,11 @@ from datetime import datetime, timedelta
 import argparse
 
 goals = {
+    'squats':50,
     'pushups':100,
     'pullups':50,
     'dips':50 }
-keys = {'pushups':'Pu', 'pullups':'P', 'dips':'D'}
+keys = {'pushups':'Pu', 'pullups':'P', 'dips':'D', 'muscleups':'M', 'squats':'S'}
 
 workout = pd.read_csv('workoutlog.csv')
 workout['DateTime'] = pd.to_datetime(workout['DateTime'])
@@ -29,8 +30,10 @@ def main(show_goal=False, yester=True, progress=False):
             print('-------------------------')
             print('Progress left')
             for goal,v in goals.items():
-                print(f"{goals[goal] - stats.get_group(keys[goal]).sum()['Reps']} {goal} to Go")
-    
+                try:
+                    print(f"{goals[goal] - stats.get_group(keys[goal]).sum()['Reps']} {goal} to Go")
+                except:
+                    print(f"You have no activity on {goal} yet. Get to work!")    
     if yester:
         print('Yesterday\'s Workout Summary')
         yesterday = workout[workout['Date'] == datetime.now().date() - timedelta(1)]
