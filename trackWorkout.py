@@ -15,6 +15,7 @@ workout = pd.read_csv('workoutlog.csv')
 workout['DateTime'] = pd.to_datetime(workout['DateTime'])
 workout['Weight'] = workout['Weight'].astype('category')
 workout['Date'] = workout['DateTime'].dt.date
+workout['Duration'] = pd.to_datetime(workout['Duration'])
 
 def main(show_goal=False, yester=True, progress=False):
     
